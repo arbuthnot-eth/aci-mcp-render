@@ -1,3 +1,4 @@
+# Temporary comment for testing GitHub push
 import json
 import logging
 
@@ -93,12 +94,27 @@ async def handle_call_tool(
             allowed_apps_only=ALLOWED_APPS_ONLY,
             format=FunctionDefinitionFormat.ANTHROPIC,
         )
-        return [
-            types.TextContent(
-                type="text",
-                text=json.dumps(result),
-            )
-        ]
+        if name == "BRAVE_SEARCH__WEB_SEARCH":
+            formatted_results = []
+            if result and result.get("data") and result["data"].get("web") and result["data"]["web"].get("results"):
+                for item in result["data"]["web"]["results"]:
+                    title = item.get("title", "N/A")
+                    description = item.get("description", "N/A")
+                    url = item.get("url", "N/A")
+                    formatted_results.append(f"Title: {title}\nDescription: {description}\nURL: {url}\n---")
+            return [
+                types.TextContent(
+                    type="text",
+                    text="\n".join(formatted_results) if formatted_results else "No web search results found.",
+                )
+            ]
+        else:
+            return [
+                types.TextContent(
+                    type="text",
+                    text=json.dumps(result),
+                )
+            ]
     except Exception as e:
         return [
             types.TextContent(
