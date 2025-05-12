@@ -53,6 +53,18 @@ Commands:
 See the [Unified MCP Server](https://www.aci.dev/docs/mcp-servers/unified-server#integration-with-mcp-clients) and [Apps MCP Server](https://www.aci.dev/docs/mcp-servers/apps-server#integration-with-mcp-clients) sections for more information on how to configure the MCP servers with different MCP clients.
 
 
+Here is an example configuration for an MCP client:
+
+```json
+    "ACI Server": {
+      "url": "&lt;URL&gt;/sse",
+      "headers": {
+        "Accept": "text/event-stream"
+      },
+      "disabled": false,
+      "autoApprove": []
+      }
+```
 ## Docker
 
 ```bash
